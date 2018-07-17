@@ -1,100 +1,71 @@
 #include <windows.h>
-#include <tchar.h>  
+#include "GL/GL.h"
 
-static TCHAR szWindowClass[] = _T("win32app");
-static TCHAR szTitle[] = _T("Win32 Guided Tour Application");
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-int CALLBACK WinMain(
-	_In_ HINSTANCE  hInstance,
-	_In_ HINSTANCE hPrevInstance,
-	_In_ LPSTR     lpCmdLine,
-	_In_ int       nCmdShow
-);
-
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in_opt LPSTR lpCmdLine, __in int nShowCmd)
 {
-	WNDCLASSEX wcex;
-	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
-	wcex.cbClsExtra = 0;
-	wcex.cbClsExtra = 0;
-	wcex.hInstance = hInstance;
-	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
-	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;
-	wcex.lpszClassName = szWindowClass;
-	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
-
-	if (!RegisterClassEx(&wcex))
-	{
-		MessageBox(NULL,
-			_T("Call to RegisterClassEx failed!"),
-			_T("Win32 Guided Tour"),
-			NULL);
-
+	MSG msg = { 0 };
+	WNDCLASS wc = { 0 };
+	wc.lpfnWndProc = WndProc;
+	wc.hInstance = hInstance;
+	wc.hbrBackground = (HBRUSH)(COLOR_BACKGROUND);
+	wc.lpszClassName = L"oglversionchecksample";
+	wc.style = CS_OWNDC;
+	if (!RegisterClass(&wc))
 		return 1;
-	}
+	CreateWindowW(wc.lpszClassName, L"openglversioncheck", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 0, 0, 640, 480, 0, 0, hInstance, 0);
 
-	HWND hWnd = CreateWindow(
-		szWindowClass,
-		szTitle,
-		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT,
-		500, 100,
-		NULL,
-		NULL,
-		hInstance,
-		NULL
-		);
-	if (!hWnd)
-	{
-		MessageBox(NULL,
-			_T("Call to CreateWindow failed!"),
-			_T("Win32 Guided Tour"),
-			NULL);
-
-		return 1;
-	}
-	MSG msg;
-	while (GetMessage(&msg, NULL, 0, 0))
-	{
-		TranslateMessage(&msg);
+	while (GetMessage(&msg, NULL, 0, 0) > 0)
 		DispatchMessage(&msg);
-	}
 
-	return (int)msg.wParam;
+	return 0;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	PAINTSTRUCT ps;
-	HDC hdc;
-	TCHAR greeting[] = _T("Hello, World!");
-
 	switch (message)
 	{
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
+	case WM_CREATE:
+	{
+					  PIXELFORMATDESCRIPTOR pfd =
+					  {
+						  sizeof(PIXELFORMATDESCRIPTOR),
+						  1,
+						  PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,    //Flags
+						  PFD_TYPE_RGBA,        // The kind of framebuffer. RGBA or palette.
+						  32,                   // Colordepth of the framebuffer.
+						  0, 0, 0, 0, 0, 0,
+						  0,
+						  0,
+						  0,
+						  0, 0, 0, 0,
+						  24,                   // Number of bits for the depthbuffer
+						  8,                    // Number of bits for the stencilbuffer
+						  0,                    // Number of Aux buffers in the framebuffer.
+						  PFD_MAIN_PLANE,
+						  0,
+						  0, 0, 0
+					  };
 
-		// Here your application is laid out.  
-		// For this introduction, we just print out "Hello, World!"  
-		// in the top left corner.  
-		TextOut(hdc,
-			5, 5,
-			greeting, _tcslen(greeting));
-		// End application specific layout section.  
+					  HDC ourWindowHandleToDeviceContext = GetDC(hWnd);
 
-		EndPaint(hWnd, &ps);
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
+					  int  letWindowsChooseThisPixelFormat;
+					  letWindowsChooseThisPixelFormat = ChoosePixelFormat(ourWindowHandleToDeviceContext, &pfd);
+					  SetPixelFormat(ourWindowHandleToDeviceContext, letWindowsChooseThisPixelFormat, &pfd);
+					  //
+					  HGLRC ourOpenGLRenderingContext = wglCreateContext(ourWindowHandleToDeviceContext);
+					  wglMakeCurrent(ourWindowHandleToDeviceContext, ourOpenGLRenderingContext);
+
+					  MessageBoxA(0, (char*)glGetString(GL_VERSION), "OPENGL VERSION", 0);
+
+					  wglDeleteContext(ourOpenGLRenderingContext);
+					  PostQuitMessage(0);
+	}
 		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
-		break;
 	}
-
 	return 0;
+
 }
