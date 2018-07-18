@@ -1,14 +1,14 @@
-﻿Build started 7/17/2018 3:08:26 PM.
+﻿Build started 7/18/2018 11:30:56 AM.
      1>Project "D:\GitHubRepo\StudyOpenGL\Study_OpenGl\Study_OpenGl.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Source.cpp
-         Source.cpp
-     1>Source.cpp(96): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /ID:\GitHubRepo\StudyOpenGL\include /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Window.cpp
+         Window.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHubRepo\StudyOpenGL\x64\Debug\Study_OpenGl.exe" /INCREMENTAL /NOLOGO /LIBPATH:D:\demo\openGL\Study_OpenGl\lib\Release\x64 glew32.lib glew32s.lib opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHubRepo\StudyOpenGL\x64\Debug\Study_OpenGl.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHubRepo\StudyOpenGL\x64\Debug\Study_OpenGl.lib" /MACHINE:X64 x64\Debug\Source.obj
-         Study_OpenGl.vcxproj -> D:\GitHubRepo\StudyOpenGL\x64\Debug\Study_OpenGl.exe
-     1>Done Building Project "D:\GitHubRepo\StudyOpenGL\Study_OpenGl\Study_OpenGl.vcxproj" (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHubRepo\StudyOpenGL\x64\Debug\Study_OpenGl.exe" /INCREMENTAL /NOLOGO /LIBPATH:D:\demo\openGL\Study_OpenGl\lib\Release\x64 glew32.lib glew32s.lib opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHubRepo\StudyOpenGL\x64\Debug\Study_OpenGl.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHubRepo\StudyOpenGL\x64\Debug\Study_OpenGl.lib" /MACHINE:X64 x64\Debug\Window.obj
+     1>MSVCRTD.lib(crtexew.obj) : error LNK2019: unresolved external symbol WinMain referenced in function __tmainCRTStartup
+     1>D:\GitHubRepo\StudyOpenGL\x64\Debug\Study_OpenGl.exe : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "D:\GitHubRepo\StudyOpenGL\Study_OpenGl\Study_OpenGl.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.89
+Time Elapsed 00:00:02.89
